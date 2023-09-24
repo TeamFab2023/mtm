@@ -45,13 +45,12 @@ function classNames(...classes: string[]) {
 
 
 const Sidebar = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   return (
 
     <>
         <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-50 lg:hidden" onClose={() => setSidebarOpen(false)}>
+          <Dialog as="div" className="relative z-50" onClose={() => setSidebarOpen(false)}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -167,11 +166,14 @@ const Sidebar = () => {
             </div>
           </Dialog>
         </Transition.Root>
-        {/* <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
+        <div className=''>
+     <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
+          {/* Sidebar component, swap this element with another sidebar if you like */}
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
       <div className="flex h-16 shrink-0 items-center">
         <img
           className="h-8 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=white"
+          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
           alt="Your Company"
         />
       </div>
@@ -181,67 +183,81 @@ const Sidebar = () => {
             <ul role="list" className="-mx-2 space-y-1">
               {navigation.map((item) => (
                 <li key={item.name}>
-                  <a
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? 'bg-indigo-700 text-white'
-                        : 'text-indigo-200 hover:text-white hover:bg-indigo-700',
-                      'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-                    )}
-                  >
-                    <item.icon
+                  {!item.children ? (
+                    <a
+                      href={item.href}
                       className={classNames(
-                        item.current ? 'text-white' : 'text-indigo-200 group-hover:text-white',
-                        'h-6 w-6 shrink-0'
+                        item.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700'
                       )}
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
+                    >
+                      <item.icon className="h-6 w-6 shrink-0 text-gray-400" aria-hidden="true" />
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Disclosure as="div">
+                      {({ open }) => (
+                        <>
+                          <Disclosure.Button
+                            className={classNames(
+                              item.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                              'flex items-center w-full text-left rounded-md p-2 gap-x-3 text-sm leading-6 font-semibold text-gray-700'
+                            )}
+                          >
+                            <item.icon className="h-6 w-6 shrink-0 text-gray-400" aria-hidden="true" />
+                            {item.name}
+                            <ChevronRightIcon
+                              className={classNames(
+                                open ? 'rotate-90 text-gray-500' : 'text-gray-400',
+                                'ml-auto h-5 w-5 shrink-0'
+                              )}
+                              aria-hidden="true"
+                            />
+                          </Disclosure.Button>
+                          <Disclosure.Panel as="ul" className="mt-1 px-2">
+                            {item.children.map((subItem) => (
+                              <li key={subItem.name}>
+                                {/* 44px */}
+                                <Disclosure.Button
+                                  as="a"
+                                  href={subItem.href}
+                                  className={classNames(
+                                    subItem.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                                    'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700'
+                                  )}
+                                >
+                                  {subItem.name}
+                                </Disclosure.Button>
+                              </li>
+                            ))}
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                  )}
                 </li>
               ))}
             </ul>
           </li>
-          <li>
-            <div className="text-xs font-semibold leading-6 text-indigo-200">Your teams</div>
-            <ul role="list" className="-mx-2 mt-2 space-y-1">
-              {teams.map((team) => (
-                <li key={team.name}>
-                  <a
-                    href={team.href}
-                    className={classNames(
-                      team.current
-                        ? 'bg-indigo-700 text-white'
-                        : 'text-indigo-200 hover:text-white hover:bg-indigo-700',
-                      'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-                    )}
-                  >
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
-                      {team.initial}
-                    </span>
-                    <span className="truncate">{team.name}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </li>
-          <li className="mt-auto">
+          <li className="-mx-6 mt-auto">
             <a
               href="#"
-              className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
+              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
             >
-          
-              <svg className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"></path>
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-</svg>
-              Settings
+              <img
+                className="h-8 w-8 rounded-full bg-gray-50"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+              <span className="sr-only">Your profile</span>
+              <span aria-hidden="true">Tom Cook</span>
             </a>
           </li>
         </ul>
       </nav>
-    </div> */}
+    </div>
+        </div>
+
         <div className="lg:pl-72 ">
 
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -388,7 +404,7 @@ const Sidebar = () => {
             </div>
           </main>
         </div>
-
+        </div>
       </>
   );
 };
