@@ -45,7 +45,7 @@ function classNames(...classes: string[]) {
 
 
 const Sidebar = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
 
     <>
@@ -167,7 +167,7 @@ const Sidebar = () => {
           </Dialog>
         </Transition.Root>
         <div className=''>
-     <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
+     <div className="hidden lg:fixed xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
       <div className="flex h-16 shrink-0 items-center">
