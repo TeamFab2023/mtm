@@ -2,13 +2,14 @@
 
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
+// import Dashboard from './app/dashboard'
 // import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Dashboard', href: './landingpage' },
-  { name: 'Company', href: '#' },
+  { name: 'Product', href: './product' },
+  { name: 'Features', href: './features' },
+  { name: 'Dashboard', href: './dashboard' },
+  { name: 'Company', href: './company' },
 ]
 
 export default function Hero() {
@@ -20,7 +21,7 @@ export default function Hero() {
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
+              <span className="sr-only">Team Fab</span>
               {/* <img
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
