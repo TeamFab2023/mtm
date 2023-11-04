@@ -13,109 +13,143 @@ import { Dialog, Popover, Transition } from '@headlessui/react';
 // } from '@heroicons/react/outline';
 // import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid';
 
-const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'About us', href: '/about' },
-    { name: 'Mock Test', href: '/mocktest' },
-    // { name: 'Contact us', href: './company' },
-]
-const Header = () => {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+interface Product {
+  name: string;
+  description: string;
+  href: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
 
-    return (
-        <header className="absolute inset-x-0 top-0 z-50 ">
-            <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-                <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5">
-                        <span className="sr-only">Your Company</span>
-                        {/* <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              /> */}
-                        <h1 className="text-xl font-semibold">
-                            Mock Test Master
-                        </h1>
-                    </a>
-                </div>
-                <div className="flex lg:hidden">
-                    <button
-                        type="button"
-                        className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                        onClick={() => setMobileMenuOpen(true)}
-                    >
-                        <span className="sr-only">Open main menu</span>
-                        {/* <Bars3Icon className="h-6 w-6" aria-hidden="true" /> */}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                    </button>
-                </div>
-                <div className="hidden lg:flex lg:gap-x-12 lg:justify-end">
-                    {/* {Dashboard} */}
-                    {navigation.map((item) => (
-                        <a key={item.name} href={item.href} className="text-sm leading-6 rounded-full text-gray-900 py-2 px-4  font-semibold hover:text-white hover:bg-purple-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                            {item.name}
-                        </a>
-                    ))}
-                    <div className="hidden lg:flex lg:flex-1 ">
-                        <a href="#" className="text-sm leading-6 bg-purple-900 py-2 px-4 rounded-full   font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                            Sign in
-                        </a>
-                    </div>
-                </div>
-            </nav>
-            <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-                <div className="fixed inset-0 z-50" />
-                <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-                    <div className="flex items-center justify-between">
-                        <a href="#" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Your Company</span>
-                            {/* <img
+interface CallToAction {
+  name: string;
+  href: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
+
+interface CompanyInfo {
+  name: string;
+  href: string;
+  description: string;
+}
+
+// const products: Product[] = [
+//   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
+//   { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
+//   { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
+//   { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
+//   { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
+// ];
+
+// const callsToAction: CallToAction[] = [
+//   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
+//   { name: 'Contact sales', href: '#', icon: PhoneIcon },
+// ];
+
+const company: CompanyInfo[] = [
+  { name: 'About us', href: '#', description: 'Learn more about our company values and mission to empower others' },
+  { name: 'Careers', href: '#', description: 'Looking for your next career opportunity? See all of our open positions' },
+  {
+    name: 'Support',
+    href: '#',
+    description: 'Get in touch with our dedicated support team or reach out on our community forums',
+  },
+  { name: 'Blog', href: '#', description: 'Read our latest announcements and get perspectives from our team' },
+];
+
+const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    <header className="bg-white">
+  
+      <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}>
+        <div className="fixed inset-0 z-10" />
+        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 flex w-full flex-col justify-between overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="p-6">
+            <div className="flex items-center justify-between">
+              <a href="#" className="-m-1.5 p-1.5">
+                <span className="sr-only">Your Company</span>
+                <img
                   className="h-8 w-auto"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   alt=""
-                /> */}
-                        </a>
-                        <button
-                            type="button"
-                            className="-m-2.5 rounded-md p-2.5 text-gray-700"
-                            onClick={() => setMobileMenuOpen(false)}
-                        >
-                            <span className="sr-only">Close menu</span>
-                            {/* <XMarkIcon className="h-6 w-6" aria-hidden="true" /> */}
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div className="mt-6 flow-root">
-                        <div className="-my-6 divide-y divide-gray-500/10">
-                            <div className="space-y-2 py-6">
-                                {navigation.map((item) => (
-                                    <a
-                                        key={item.name}
-                                        href={item.href}
-                                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                    >
-                                        {item.name}
-                                    </a>
-                                ))}
-                            </div>
-                            <div className="py-6">
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                >
-                                    Log in
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </Dialog.Panel>
-            </Dialog>
-        </header>
-    );
+                />
+              </a>
+              <button
+                type="button"
+                className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span className="sr-only">Close menu</span>
+                {/* <XMarkIcon className="h-6 w-6" aria-hidden="true" /> */}
+              </button>
+            </div>
+            <div className="mt-6 flow-root">
+              <div className="-my-6 divide-y divide-gray-500/10">
+                <div className="space-y-2 py-6">
+                  {/* {products.map((item) => ( */}
+                    <a
+                      // key={item.name}
+                      href=""
+                      className="group -mx-3 flex items-center gap-x-6 rounded-lg p-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        {/* <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" /> */}
+                      </div>
+                      name
+                    </a>
+                  {/* ))} */}
+                </div>
+                <div className="space-y-2 py-6">
+                  <a
+                    href="#"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Features
+                  </a>
+                  <a
+                    href="#"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Marketplace
+                  </a>
+
+                  {company.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+                <div className="py-6">
+                  <a
+                    href="#"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Log in
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="sticky bottom-0 grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50 text-center">
+            {/* {callsToAction.map((item) => ( */}
+              <a
+                // key={item.name}
+                href=""
+                className="p-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+              >
+                name
+              </a>
+            {/* ))} */}
+          </div>
+        </Dialog.Panel>
+      </Dialog>
+    </header>
+  );
 };
 
 export default Header;
