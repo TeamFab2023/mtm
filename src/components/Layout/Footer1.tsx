@@ -1,5 +1,5 @@
+import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 interface NavigationItem {
   name: string;
@@ -50,46 +50,32 @@ const navigation: NavigationItem[] = [
     ),
   },
 ];
-interface OptionItem {
-  name: string,
-  href:string
-}
-const options: OptionItem[] = [
-    {
-      name: 'Privacy Policy /',
-      href:'#'
-    },
-    {
-      name: 'Term of Services',
-      href:'#'
-    },
-]
+
 const Footer = () => {
+
   return (
     <footer className="bg-white">
     <div className="mx-auto max-w-7xl px-6 py-6 md:flex md:items-center md:justify-between lg:px-8">
       <div className="flex justify-center space-x-6 md:order-2">
         {navigation.map((item) => (
-          <Link key={item.name} href={item.href} className="text-gray-400 hover:text-gray-500">
+          <a key={item.name} href={item.href} className="text-gray-400 hover:text-gray-500">
             <span className="sr-only">{item.name}</span>
             <item.icon className="h-6 w-6" aria-hidden="true" />
-          </Link>
+          </a>
         ))}
       </div>
-      <div className="mt-8 md:order-1 md:mt-0 w-72 flex lg:mx-1 mx-auto">
-        {
-          options.map((option) => (
-        <Link key={option.name} href={option.href} className="mx-1 text-xs leading-5 text-gray-400 hover:text-gray-500">
-        {option.name}
-        </Link>
-
-          ))
-        }
-       
+      <div className="mt-8 md:order-1 md:mt-0">
+        <p className="text-center text-xs leading-5 text-gray-500">
+          &copy; 2023 TeamFab, Inc. All rights reserved.
+        </p>
       </div>
     </div>
   </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
+
+// const Footer: React.FC = () => {
+
+
