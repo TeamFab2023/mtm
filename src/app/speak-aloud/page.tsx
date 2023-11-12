@@ -9,6 +9,8 @@ const VoiceRecorderUI = () => {
   const [mediaRecorder, setMediaRecorder] = useState<any>(null);
   const [timer, setTimer] = useState<any>(0);
   const [intervalId, setIntervalId] = useState<any>(null);
+  const [micAccessDenied, setMicAccessDenied] = useState(false);
+  console.log("media recorder", mediaRecorder);
 
   useEffect(() => {
     navigator.mediaDevices
@@ -16,6 +18,7 @@ const VoiceRecorderUI = () => {
       .then((stream) => {
         const recorder = new MediaRecorder(stream);
         setMediaRecorder(recorder);
+        setMicAccessDenied(false);
 
         recorder.ondataavailable = (event) => {
           if (event.data.size > 0) {
@@ -25,12 +28,13 @@ const VoiceRecorderUI = () => {
       })
       .catch((error) => {
         console.error("Error accessing microphone:", error);
+        setMicAccessDenied(true);
       });
 
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [micAccessDenied]);
 
   const toggleRecording = () => {
     if (mediaRecorder) {
@@ -67,7 +71,7 @@ const VoiceRecorderUI = () => {
           they have enough time to study and complete assignments. Effective time management skills
           are crucial for balancing academics and extracurriculars successfully.{" "}
         </div>{" "}
-        <div className="flex flex-col justify-center items-center mt-5 border-dashed border-2 border-gray-400 h-40 rounded-md bg-gray-100 text-gray-800">
+        {/* <div className="flex flex-col justify-center items-center mt-5 border-dashed border-2 border-gray-400 h-40 rounded-md bg-gray-100 text-gray-800">
           <p> {isRecording ? "Stop Recording" : "Start Recording"}</p>{" "}
           <button onClick={toggleRecording} className="bg-gray-300 p-2 rounded-full cursor-pointer">
             <BsMic size={40} color={isRecording ? "red" : "gray"} />{" "}
@@ -75,7 +79,27 @@ const VoiceRecorderUI = () => {
           <div className="text-gray-600 text-sm ">
             Use a headset with inline microphone to get accurate AI scores{" "}
           </div>{" "}
-        </div>
+        </div> */}
+        {micAccessDenied ? (
+          // Show this red box if microphone access is denied
+          <div className="flex flex-col justify-center items-center mt-5 h-40 rounded-md bg-red-800 text-white">
+            <p>Microphone access denied</p>
+          </div>
+        ) : (
+          // Otherwise, show the normal recording interface
+          <div className="flex flex-col justify-center items-center mt-5 border-dashed border-2 border-gray-400 h-40 rounded-md bg-gray-100 text-gray-800">
+            <p>{isRecording ? "Stop Recording" : "Start Recording"}</p>
+            <button
+              onClick={toggleRecording}
+              className="bg-gray-300 p-2 rounded-full cursor-pointer"
+            >
+              <BsMic size={40} color={isRecording ? "red" : "gray"} />
+            </button>
+            <div className="text-gray-600 text-sm">
+              Use a headset with inline microphone to get accurate AI scores
+            </div>
+          </div>
+        )}
         {audioUrl && (
           <div className="mt-4">
             <audio controls src={audioUrl}></audio>
