@@ -1,11 +1,16 @@
+"use client";
 import Button from "@/components/Common/Buttons/Button";
 import ButtonWithLeftIcon from "@/components/Common/Buttons/ButtonWithLeftIcon";
+import OutlineButtonWithGrayColor from "@/components/Common/Buttons/OutlineButtonWithGrayColor";
 import OutlineButtonWithLeftIcon from "@/components/Common/Buttons/OutlineButtonWithLeftIcon";
 import OutlineButtonWithRedColor from "@/components/Common/Buttons/OutlineButtonWithRedColor";
 import SearchInputWithButton from "@/components/Common/Inputs/SearchInputWithButton";
 import Image from "next/image";
 import { FaRegCopy } from "react-icons/fa";
 import { RiCoupon5Fill } from "react-icons/ri";
+import { BiMessageRoundedDots } from "react-icons/bi";
+import { TfiMenuAlt } from "react-icons/tfi";
+import { PiNotepad } from "react-icons/pi";
 
 const page = () => {
   return (
@@ -71,6 +76,9 @@ const page = () => {
         {/* This is Divider */}
 
         <div className="h-8 w-full"></div>
+
+        {/* This is Buttons Section */}
+
         <div className="flex justify-between text-[14px]">
           <div className="flex justify-between gap-4">
             <Button text="Submit" />
@@ -84,6 +92,26 @@ const page = () => {
             <SearchInputWithButton />
             <Button text="Next" />
           </div>
+        </div>
+
+        {/* This is Divider */}
+
+        <div className="h-8 w-full"></div>
+
+        {/* This is Discussion Section */}
+
+        <div className="flex items-center my-4">
+          <div className="flex w-10 border-t border-gray-300"></div>
+          <span className="mx-3 font-semibold">Discussion</span>
+          <div className="flex-1 border-t border-gray-300"></div>
+        </div>
+
+        {/* This is Discussion Navbar */}
+
+        <div className="flex border-b border-gray-300">
+          <OutlineButtonWithGrayColor text="Discussion" leftIcon={<BiMessageRoundedDots />} />
+          <OutlineButtonWithGrayColor text="Board" leftIcon={<TfiMenuAlt />} />
+          <OutlineButtonWithGrayColor text="Me" leftIcon={<PiNotepad />} />
         </div>
       </div>
     </div>
